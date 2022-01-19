@@ -1,0 +1,27 @@
+GET http://localhost:5000/products/
+
+###
+GET http://localhost:5000/products/2
+
+###
+POST http://localhost:5000/products
+Content-Type: application/jsony
+
+{
+    "name": "coba",
+    "quantity": 12,
+    "price": 1234
+}
+
+###
+PUT http://localhost:5000/products/1
+Content-Type: application/json
+
+{
+    "name": "coba lagi",
+    "quantity": 200,
+    "price": 4321
+}
+
+###
+DELETE http://localhost:5000/products/3
