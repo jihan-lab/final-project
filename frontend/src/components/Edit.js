@@ -1,10 +1,37 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useHistory, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 
-const Register = () => {
+const Edit = () => {
 
+    const [name, setName] = useState([]);
+    const [rentangHarga, setRentangHarga] = useState([]);
+    const [description, setDescription] = useState([]);
+    const history = useHistory();
+    const { id } = useParams();
+
+    const updateProduct = async (e) => {
+        e.preventDefault();
+        await axios.put(`http://localhost:5000/products/${id}`, {
+            name: name,
+            quantity: rentangHarga,
+            description: description
+        });
+        history.push("/dashboard");
+    }
+
+    useEffect(() => {
+        getProductById();
+    }, [])
+
+    const getProductById = async () => {
+        const response = await axios.get(`http://localhost:5000/products/${id}`);
+        setName(response.data.name);
+        setRentangHarga(response.data.rentangHarga);
+        setDescription(response.data.description);
+    }
 
     return (
         <div>
@@ -22,8 +49,13 @@ const Register = () => {
                             <li className="nav-item mx-3">
                                 <Link className="nav-link active" to={`/`}>Home</Link>
                             </li>
-                            <li className="nav-item mx-3">
-                                <Link to={`/login`} className="btn btn-success px-4" href="#">Sign In</Link>
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Hi, Admin
+                                </a>
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a className="dropdown-item" href="#">Logout</a></li>
+                                </ul>
                             </li>
                         </ul>
                     </div>
@@ -32,31 +64,49 @@ const Register = () => {
             <div className="container-lg bawah-nav">
                 <div className="row mt-5 text-center">
                     <div className="col-lg-12">
-                        <h2>Silahkan Daftar</h2>
+                        <h2>Edit Journal</h2>
                     </div>
                 </div>
                 <div className="row justify-content-center">
                     <div className="col-6  mt-2">
                         <div className="card shadow">
                             <div className="card-body">
-                                <form>
+                                <Link to="/dashboard" className="btn btn-success my-2 mb-3">Back</Link>
+                                <form onSubmit={updateProduct}>
                                     <div className="mb-3">
-                                        <label className="form-label">Your Full name</label>
-                                        <input type="text" className="form-control" name="name" />
+                                        <label className="form-label">Nama Makanan</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={name}
+                                            placeholder="Nama Makanan..."
+                                            onChange={(e) => setName(e.target.value)}
+                                        />
                                     </div>
                                     <div className="mb-3">
-                                        <label className="form-label">Email address</label>
-                                        <input type="email" className="form-control" name="email" />
+                                        <label className="form-label">Kisaran Harga</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={rentangHarga}
+                                            placeholder="Kisaran Harga.."
+                                            onChange={(e) => setRentangHarga(e.target.value)}
+                                        />
                                     </div>
                                     <div className="mb-3">
-                                        <label className="form-label">Your Password</label>
-                                        <input type="password" className="form-control" name="password" />
+                                        <label className="form-label">Description</label>
+                                        <textarea
+                                            type="number"
+                                            className="form-control"
+                                            value={description}
+                                            onChange={(e) => setDescription(e.target.value)}
+                                        ></textarea>
                                     </div>
                                     <div className="mb-3">
-                                        <label className="form-label">Confirm Password</label>
-                                        <input type="password" className="form-control" name="conf_password" />
+                                        <div className="d-grid gap-2">
+                                            <button type="submit" className="btn btn-primary">Update</button>
+                                        </div>
                                     </div>
-                                    <button type="submit" className="btn btn-primary mb-5">Register</button>
                                 </form>
                             </div>
                         </div>
@@ -101,4 +151,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default Edit

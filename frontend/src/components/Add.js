@@ -1,9 +1,24 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 
-const Login = () => {
+const Add = () => {
+    const [name, setName] = useState([]);
+    const [rentangHarga, setRentangHarga] = useState([]);
+    const [description, setDescription] = useState([]);
+    const history = useHistory();
+
+    const saveProduct = async (e) => {
+        e.preventDefault();
+        await axios.post('http://localhost:5000/products', {
+            name: name,
+            rentangHarga: rentangHarga,
+            description: description
+        });
+        history.push("/dashboard");
+    }
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-white fixed-top">
@@ -20,8 +35,13 @@ const Login = () => {
                             <li className="nav-item mx-3">
                                 <Link className="nav-link active" to={`/`}>Home</Link>
                             </li>
-                            <li className="nav-item mx-3">
-                                <Link to={`/register`} className="nav-link" href="#">Sign Up</Link>
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Hi, Admin
+                                </a>
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a className="dropdown-item" href="#">Logout</a></li>
+                                </ul>
                             </li>
                         </ul>
                     </div>
@@ -30,23 +50,48 @@ const Login = () => {
             <div className="container-lg bawah-nav">
                 <div className="row mt-5 text-center">
                     <div className="col-lg-12">
-                        <h2>Silahkan Login</h2>
+                        <h2>Add Journal</h2>
                     </div>
                 </div>
                 <div className="row justify-content-center">
                     <div className="col-6  mt-2">
                         <div className="card shadow">
                             <div className="card-body">
-                                <form>
+                                <Link to="/dashboard" className="btn btn-success my-2 mb-3">Back</Link>
+                                <form onSubmit={saveProduct}>
                                     <div className="mb-3">
-                                        <label className="form-label">Email address</label>
-                                        <input type="email" className="form-control" name="email" />
+                                        <label className="form-label">Nama Makanan</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                        />
                                     </div>
                                     <div className="mb-3">
-                                        <label className="form-label">Password</label>
-                                        <input type="password" className="form-control" name="password" />
+                                        <label className="form-label">Kisaran Harga</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={rentangHarga}
+                                            onChange={(e) => setRentangHarga(e.target.value)}
+                                        />
                                     </div>
-                                    <button type="submit" className="btn btn-primary mb-5">Login</button>
+                                    <div className="mb-3">
+                                        <label className="form-label">Description</label>
+                                        <textarea
+                                            type="number"
+                                            className="form-control"
+                                            value={description}
+                                            onChange={(e) => setDescription(e.target.value)}
+                                        ></textarea>
+                                    </div>
+                                    <div className="mb-3">
+                                        <div className="d-grid gap-2">
+                                            <button type="submit" className="btn btn-primary">Save</button>
+                                        </div>
+                                    </div>
+                                    {name} - {rentangHarga} - {description}
                                 </form>
                             </div>
                         </div>
@@ -91,4 +136,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Add

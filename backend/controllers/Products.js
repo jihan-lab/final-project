@@ -1,4 +1,5 @@
 import Product from "../models/productModels.js";
+import multer from "multer";
 
 export const getAllProducts = async (req, res) => {
     try {

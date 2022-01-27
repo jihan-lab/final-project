@@ -3,7 +3,31 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 
-const Login = () => {
+import st_cake from "./images/strawberry_cake.jpg"
+import burger from "./images/burger.jpg"
+import cup_cake from "./images/cup_cake.jpg"
+import donuts from "./images/donuts.jpg"
+import nasi_goreng from "./images/nasi_goreng.jpg"
+import steak_panggang from "./images/steak_panggang.jpg"
+
+const Dashboard = () => {
+
+    const [products, setProduct] = useState([]);
+
+    useEffect(() => {
+        getProduct();
+    }, []);
+
+    const getProduct = async () => {
+        const response = await axios.get('http://localhost:5000/products');
+        setProduct(response.data);
+    }
+
+    const deleteProduct = async (id) => {
+        await axios.delete(`http://localhost:5000/products/${id}`);
+        getProduct();
+    }
+
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-white fixed-top">
@@ -20,37 +44,46 @@ const Login = () => {
                             <li className="nav-item mx-3">
                                 <Link className="nav-link active" to={`/`}>Home</Link>
                             </li>
-                            <li className="nav-item mx-3">
-                                <Link to={`/register`} className="nav-link" href="#">Sign Up</Link>
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Hi, Admin
+                                </a>
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a className="dropdown-item" href="#">Logout</a></li>
+                                </ul>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
             <div className="container-lg bawah-nav">
-                <div className="row mt-5 text-center">
-                    <div className="col-lg-12">
-                        <h2>Silahkan Login</h2>
-                    </div>
-                </div>
-                <div className="row justify-content-center">
-                    <div className="col-6  mt-2">
-                        <div className="card shadow">
-                            <div className="card-body">
-                                <form>
-                                    <div className="mb-3">
-                                        <label className="form-label">Email address</label>
-                                        <input type="email" className="form-control" name="email" />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label className="form-label">Password</label>
-                                        <input type="password" className="form-control" name="password" />
-                                    </div>
-                                    <button type="submit" className="btn btn-primary mb-5">Login</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                <div className="container">
+                    <Link to="/add" className="btn btn-primary my-2">Add New</Link>
+                    <table className="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Kisaran Harga</th>
+                                <th scope="col">Deskripsi</th>
+                                <th scope="col">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {products.map((product, index) => (
+                                <tr key={product.id}>
+                                    <th scope="row">{index + 1}</th>
+                                    <td>{product.name}</td>
+                                    <td>{product.rentangHarga}</td>
+                                    <td>{product.description}</td>
+                                    <td>
+                                        <Link to={`/edit/${product.id}`} className="btn btn-success">Edit</Link>
+                                        <button onClick={() => deleteProduct(product.id)} className="btn btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -91,4 +124,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Dashboard

@@ -7,11 +7,11 @@ const Product = db.define('products', {
     name: {
         type: DataTypes.STRING
     },
-    quantity: {
-        type: DataTypes.INTEGER
+    rentangHarga: {
+        type: DataTypes.STRING
     },
-    price: {
-        type: DataTypes.DOUBLE
+    description: {
+        type: DataTypes.STRING
     }
 }, {
     freezeTableName: true
