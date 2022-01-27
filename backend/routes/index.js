@@ -1,19 +1,34 @@
 import express from "express";
 
+
 import {
     getAllProducts,
     getProductById,
     createProduct,
     deleteProduct,
-    updateProduct
+    updateProduct,
 } from "../controllers/Products.js";
+
+import { 
+    createAccount, 
+    getAllUser, 
+    loginAccount, 
+    refresh,
+    verify_token, 
+} from "../controllers/User.js";
 
 const router = express.Router();
 
-router.get('/', getAllProducts);
-router.get('/:id', getProductById);
-router.post('/', createProduct);
-router.delete('/:id', deleteProduct);
-router.put('/:id', updateProduct);
+router.get('/getallproduct', getAllProducts);
+router.get('/getproduct/:id', getProductById);
+router.post('/createproduct', createProduct);
+router.delete('/delete/:id', deleteProduct);
+router.put('/update/:id', updateProduct);
+
+router.get('/getalluser/:id',verify_token, getAllUser);
+router.post('/createaccount',createAccount);
+router.post('/login',loginAccount)
+
+router.get("/api/token", refresh);
 
 export default router;

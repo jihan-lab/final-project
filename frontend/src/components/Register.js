@@ -1,10 +1,37 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 
 const Register = () => {
 
+    // Form Validasi untuk tiap field yang kosong
+    const [validated, setValidated] = useState(false);
+    // Data
+    const [username,setUsername] = useState('');
+    const [email,setEmail] = useState('');
+    const [password,setPassword] = useState('')
+
+    const registerAccount = async(e)=>{
+
+        const form = e.currentTarget;
+            if (form.checkValidity() === false) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            e.preventDefault();
+            setValidated(true)
+            await axios.post(`http://localhost:5000/api/createaccount`,{
+                username : username,
+                email:email,
+                password: password
+            })
+            alert('Akun berhasil di daftarkan')
+            setTimeout(()=>window.location.reload(),500)
+
+    }
 
     return (
         <div>
@@ -53,25 +80,31 @@ const Register = () => {
                     <div className="col-6  mt-2">
                         <div className="card shadow">
                             <div className="card-body">
-                                <form>
-                                    <div className="mb-3">
-                                        <label className="form-label">Your Full name</label>
-                                        <input type="text" className="form-control" name="name" />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label className="form-label">Email address</label>
-                                        <input type="email" className="form-control" name="email" />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label className="form-label">Your Password</label>
-                                        <input type="password" className="form-control" name="password" />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label className="form-label">Confirm Password</label>
-                                        <input type="password" className="form-control" name="conf_password" />
-                                    </div>
-                                    <button type="submit" className="btn btn-primary mb-5">Register</button>
-                                </form>
+                                <Form validated={validated} onSubmit={registerAccount}>
+                                    <Form.Group className="mb-3" controlId="formBasicUsername">
+                                        <Form.Label>Username</Form.Label>
+                                        <Form.Control required size="lg" value={username}
+                                                    onChange={(e)=>setUsername(e.target.value)} type="text" placeholder="Enter username" />
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                                        <Form.Label>Email address</Form.Label>
+                                        <Form.Control required size="lg" value={email}
+                                                    onChange={(e)=>setEmail(e.target.value)} type="email" placeholder="Enter email" />
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                                        <Form.Label>Password</Form.Label>
+                                        <Form.Control required size="lg" value={password}
+                                                    onChange={(e)=>setPassword(e.target.value)} type="password" placeholder="Password" />
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                    </Form.Group>
+                                    <Button variant="primary" type="submit">
+                                        Register
+                                    </Button>
+                                </Form>
                             </div>
                         </div>
                     </div>
