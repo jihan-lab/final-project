@@ -1,5 +1,5 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import ProductList from "./components/ProductList";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ProductList from './components/ProductList';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
@@ -9,28 +9,24 @@ import Edit from './components/Edit';
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          <ProductList />
+    <BrowserRouter>
+        <Routes>
+        <Route exact path="/" element={<ProductList />}>
         </Route>
-        <Route path="/login">
-          <Login />
+        <Route path="/login" element={<Login />}>
         </Route>
-        <Route path="/register">
-          <Register />
+        <Route path="/register" element={<Register />}>
         </Route>
-        <Route path="/dashboard">
-          <Dashboard />
+        <Route path="/dashboard" element={<Dashboard />}>
         </Route>
-        <Route path="/add">
-          <Add />
+        <Route path="/add" element={<Add />}>
         </Route>
-        <Route path="/edit/:id">
-          <Edit />
+        <Route path="/edit/:id" element={<Edit />}>
         </Route>
-      </Switch>
-    </Router>
+
+        </Routes>
+    </BrowserRouter>
+
   );
 }
 
