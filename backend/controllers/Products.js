@@ -25,7 +25,13 @@ export const getProductById = async (req, res) => {
 
 export const createProduct = async (req, res) => {
     try {
-        await Product.create(req.body);
+        const filePath = `/images/${req.file.filename}`
+        await Product.create({
+            name: req.body.name,
+            rentangHarga: req.body.rentangHarga,
+            description: req.body.description,
+            image: filePath
+        })
         res.json({
             "message": "Product created"
         });

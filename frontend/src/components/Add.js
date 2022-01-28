@@ -8,15 +8,21 @@ const Add = () => {
     const [name, setName] = useState([]);
     const [rentangHarga, setRentangHarga] = useState([]);
     const [description, setDescription] = useState([]);
+    const [image, setImage] = useState([]);
     const history = useHistory();
 
     const saveProduct = async (e) => {
         e.preventDefault();
-        await axios.post('http://localhost:5000/products', {
-            name: name,
-            rentangHarga: rentangHarga,
-            description: description
-        });
+
+        const formData = new FormData()
+        formData.append('name', name)
+        formData.append('rentangHarga', rentangHarga)
+        formData.append('description', description)
+        formData.append('image', image)
+
+        await axios.post('http://localhost:5000/products', formData)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
         history.push("/dashboard");
     }
     return (
@@ -35,14 +41,6 @@ const Add = () => {
                             <li className="nav-item mx-3">
                                 <Link className="nav-link active" to={`/`}>Home</Link>
                             </li>
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Hi, Admin
-                                </a>
-                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a className="dropdown-item" href="#">Logout</a></li>
-                                </ul>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -58,7 +56,7 @@ const Add = () => {
                         <div className="card shadow">
                             <div className="card-body">
                                 <Link to="/dashboard" className="btn btn-success my-2 mb-3">Back</Link>
-                                <form onSubmit={saveProduct}>
+                                <form onSubmit={saveProduct} encType="multipart/form-data">
                                     <div className="mb-3">
                                         <label className="form-label">Nama Makanan</label>
                                         <input
@@ -87,11 +85,20 @@ const Add = () => {
                                         ></textarea>
                                     </div>
                                     <div className="mb-3">
+                                        <label className="form-label">Your Image</label>
+                                        <input
+                                            className="form-control form-control-sm"
+                                            type="file"
+                                            name="image"
+                                            id="image"
+                                            onChange={(e) => setImage(e.target.files[0])}
+                                        />
+                                    </div>
+                                    <div className="mb-3">
                                         <div className="d-grid gap-2">
                                             <button type="submit" className="btn btn-primary">Save</button>
                                         </div>
                                     </div>
-                                    {name} - {rentangHarga} - {description}
                                 </form>
                             </div>
                         </div>

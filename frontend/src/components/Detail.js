@@ -1,23 +1,28 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useHistory, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-const Dashboard = () => {
 
-    const [products, setProduct] = useState([]);
+const Detail = () => {
+
+    const [name, setName] = useState([]);
+    const [rentangHarga, setRentangHarga] = useState([]);
+    const [description, setDescription] = useState([]);
+    const [image, setImage] = useState([]);
+    const history = useHistory();
+    const { id } = useParams();
 
     useEffect(() => {
-        getProduct();
-    }, []);
+        getProductById();
+    }, [])
 
-    const getProduct = async () => {
-        const response = await axios.get('http://localhost:5000/products');
-        setProduct(response.data);
-    }
-
-    const deleteProduct = async (id) => {
-        await axios.delete(`http://localhost:5000/products/${id}`);
-        getProduct();
+    const getProductById = async () => {
+        const response = await axios.get(`http://localhost:5000/products/${id}`);
+        setName(response.data.name);
+        setRentangHarga(response.data.rentangHarga);
+        setDescription(response.data.description);
+        setImage(response.data.image);
     }
 
     return (
@@ -36,38 +41,35 @@ const Dashboard = () => {
                             <li className="nav-item mx-3">
                                 <Link className="nav-link active" to={`/`}>Home</Link>
                             </li>
+                            <li className="nav-item dropdown">
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a className="dropdown-item" href="#">Logout</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </nav>
             <div className="container-lg bawah-nav">
-                <div className="container">
-                    <Link to="/add" className="btn btn-primary my-2">Add New</Link>
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Nama</th>
-                                <th scope="col" width="20%">Kisaran Harga</th>
-                                <th scope="col" >Deskripsi</th>
-                                <th scope="col" width="15%">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {products.map((product, index) => (
-                                <tr key={product.id}>
-                                    <th scope="row">{index + 1}</th>
-                                    <td>{product.name}</td>
-                                    <td>{product.rentangHarga}</td>
-                                    <td>{product.description}</td>
-                                    <td>
-                                        <Link to={`/edit/${product.id}`} className="btn btn-success">Edit</Link>
-                                        <button onClick={() => deleteProduct(product.id)} className="btn btn-danger">Delete</button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                <div className="row">
+                    <div className="col-12 ">
+                        <div className="card">
+                            <div className="products-image" data-bs-toggle="modal" data-bs-target="#modalProducts-1">
+                                <img src={image} class="card-img-top" alt="..." />
+                            </div>
+                            <div className="card-body">
+                                <h5 className="card-title">{name}</h5>
+                                <p className="card-text">{rentangHarga}</p>
+                            </div>
+                            <div class="p-5 mb-4 bg-light rounded-3">
+                                <div class="container-fluid py-5">
+                                    <h1 class="display-5 fw-bold">{name}</h1>
+                                    <p class="col-md-8 fs-4">{description}</p>
+                                    <Link to="/" className="btn btn-primary btn-lg my-2 mb-3">Back</Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -108,4 +110,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard
+export default Detail

@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import Add from './components/Add';
+import Detail from './components/Detail';
 import Edit from './components/Edit';
 
 
@@ -24,8 +25,16 @@ function App() {
         <Route path="/edit/:id" element={<Edit />}>
         </Route>
 
+        <Route path="/detail/:id">
+          <Detail />
+        </Route>
+      </Switch>
+    </Router>
+
+
         </Routes>
     </BrowserRouter>
+
 
   );
 }
