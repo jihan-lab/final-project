@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 
@@ -9,7 +9,7 @@ const Edit = () => {
     const [name, setName] = useState([]);
     const [rentangHarga, setRentangHarga] = useState([]);
     const [description, setDescription] = useState([]);
-    const history = useHistory();
+    const history = useNavigate();
     const { id } = useParams();
 
     const updateProduct = async (e) => {

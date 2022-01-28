@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 
@@ -8,7 +8,7 @@ const Add = () => {
     const [name, setName] = useState([]);
     const [rentangHarga, setRentangHarga] = useState([]);
     const [description, setDescription] = useState([]);
-    const history = useHistory();
+    const history = useNavigate();
 
     const saveProduct = async (e) => {
         e.preventDefault();
