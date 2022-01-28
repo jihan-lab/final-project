@@ -33,7 +33,7 @@ const fileFilter = (req, file, cb) => {
 
 try {
     await db.authenticate();
-    // await Product.sync();
+    await Product.sync();
     // await User.sync();
     console.log("Database connected...");
 } catch (error) {
