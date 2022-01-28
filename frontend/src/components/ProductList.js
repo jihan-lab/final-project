@@ -2,9 +2,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-
-import st_cake from "./images/strawberry_cake.jpg"
-
 const ProductList = () => {
 
     const [products, setProduct] = useState([]);
@@ -85,46 +82,19 @@ const ProductList = () => {
                     {products.map((product, index) => (
                         <div className="col-6 col-md-4 col-lg-3 mt-2 " key={product.id}>
                             <div className="card">
-                                <div className="products-thumbnail">
-                                    <div className="products-image" data-bs-toggle="modal" data-bs-target="#modalProducts-1" style={{ backgroundImage: `url(${st_cake})` }}>
-                                    </div>
+                                <div className="products-image" data-bs-toggle="modal" data-bs-target="#modalProducts-1">
+                                    <img src={product.image} class="card-img-top" alt="..." />
                                 </div>
                                 <div className="card-body">
                                     <h5 className="card-title">{product.name}</h5>
                                     <p className="card-text">{product.rentangHarga}</p>
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#modalProducts-1"
-                                        className="btn btn-primary">Preview</button>
-                                </div>
-                            </div>
-                            <div className="modal fade" id="modalProducts-1" aria-hidden="true">
-                                <div className="modal-dialog modal-xl">
-                                    <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h5 className="modal-title" id="exampleModalLabel">Strawberry Cake</h5>
-                                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div className="modal-body">
-                                            <div className="row">
-                                                <div className="col-lg-12">
-                                                    <div className="modal-thumbnail">
-                                                        <div className="products-image" style={{ backgroundImage: `url(${st_cake})` }}>
-                                                        </div>
-                                                    </div>
-                                                    <div className="card-body">
-                                                        <h5 className="card-title">{product.name}</h5>
-                                                        <p className="card-text">{product.rentangHarga}</p>
-                                                        <p className="card-text">{product.description}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <Link to={`/detail/${product.id}`} className="btn btn-primary">Preview</Link>
                                 </div>
                             </div>
                         </div>
                     ))}
                 </div>
-            </div>
+            </div >
 
             <footer>
                 <div className="container-lg">
@@ -159,7 +129,7 @@ const ProductList = () => {
                     </div>
                 </div>
             </footer>
-        </div>
+        </div >
     )
 }
 

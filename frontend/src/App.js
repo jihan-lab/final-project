@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import Add from './components/Add';
+import Detail from './components/Detail';
 import Edit from './components/Edit';
 
 
@@ -28,6 +29,9 @@ function App() {
         </Route>
         <Route path="/edit/:id">
           <Edit />
+        </Route>
+        <Route path="/detail/:id">
+          <Detail />
         </Route>
       </Switch>
     </Router>

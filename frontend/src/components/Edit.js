@@ -16,7 +16,7 @@ const Edit = () => {
         e.preventDefault();
         await axios.put(`http://localhost:5000/products/${id}`, {
             name: name,
-            quantity: rentangHarga,
+            rentangHarga: rentangHarga,
             description: description
         });
         history.push("/dashboard");
@@ -48,14 +48,6 @@ const Edit = () => {
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item mx-3">
                                 <Link className="nav-link active" to={`/`}>Home</Link>
-                            </li>
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Hi, Admin
-                                </a>
-                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a className="dropdown-item" href="#">Logout</a></li>
-                                </ul>
                             </li>
                         </ul>
                     </div>
