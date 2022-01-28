@@ -1,9 +1,37 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Form, Button } from "react-bootstrap";
+import { Link,useNavigate } from "react-router-dom";
 
 
 const Login = () => {
+     // Login
+    const [email,setEmail] = useState('');
+    const [password,setPassword] = useState('');
+    const [Msg,setMsg] = useState('');
+    const direct = useNavigate();
+    const [validate,setValidate] = useState(false); 
+
+    const LoginAccount = async(e)=>{
+        const form = e.currentTarget;
+        if(form.checkValidity()===false){
+            e.preventDefault();
+        }
+        try {
+            e.preventDefault();
+            setValidate(true)
+            await axios.post('http://localhost:5000/login',{
+                email : email,
+                password : password
+            });
+            alert('Welcome')
+            direct('/')
+        } catch (error) {
+            if(error.response)
+            {setMsg(error.response.data)}
+        }
+    }
+
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-white fixed-top">
@@ -51,17 +79,34 @@ const Login = () => {
                     <div className="col-6  mt-2">
                         <div className="card shadow">
                             <div className="card-body">
-                                <form>
-                                    <div className="mb-3">
-                                        <label className="form-label">Email address</label>
-                                        <input type="email" className="form-control" name="email" />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label className="form-label">Password</label>
-                                        <input type="password" className="form-control" name="password" />
-                                    </div>
-                                    <button type="submit" className="btn btn-primary mb-5">Login</button>
-                                </form>
+                            
+                                <Form validated={validate} onSubmit={LoginAccount}>
+                                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                                      <Form.Label>Email address</Form.Label>
+                                        <Form.Control required 
+                                        value={email}
+                                        onChange={(e)=>setEmail(e.target.value)}
+                                        type="email" 
+                                        placeholder="Enter email"/>
+                                      
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                                      <Form.Label>Password</Form.Label>
+                                        <Form.Control required
+                                        value={password}
+                                        onChange={(e)=>setPassword(e.target.value)}
+                                        type="password" 
+                                        placeholder="Password" />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                    </Form.Group>
+                                    <Form.Label value={Msg}></Form.Label><br/>
+                                    <Button variant="primary" type="submit">
+                                        Login
+                                    </Button>
+                                </Form>  
+                                 
                             </div>
                         </div>
                     </div>

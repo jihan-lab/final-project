@@ -18,7 +18,7 @@ try {
     console.log("Connection error: ", error);
 }
 
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 app.use('/products', productRoutes);

@@ -1,24 +1,21 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import ProductList from "./components/ProductList";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ProductList from './components/ProductList';
 import Login from './components/Login';
 import Register from './components/Register';
 
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          <ProductList />
+    <BrowserRouter>
+        <Routes>
+        <Route exact path="/" element={<ProductList />}>
         </Route>
-        <Route path="/login">
-          <Login />
+        <Route path="/login" element={<Login />}>
         </Route>
-        <Route path="/register">
-          <Register />
+        <Route path="/register" element={<Register />}>
         </Route>
-      </Switch>
-    </Router>
+        </Routes>
+    </BrowserRouter>
   );
 }
 

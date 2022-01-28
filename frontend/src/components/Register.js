@@ -23,7 +23,7 @@ const Register = () => {
 
             e.preventDefault();
             setValidated(true)
-            await axios.post(`http://localhost:5000/api/createaccount`,{
+            await axios.post(`http://localhost:5000/createaccount`,{
                 username : username,
                 email:email,
                 password: password
