@@ -1,26 +1,17 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 
-const Edit = () => {
+const Detail = () => {
 
     const [name, setName] = useState([]);
     const [rentangHarga, setRentangHarga] = useState([]);
     const [description, setDescription] = useState([]);
-    const history = useNavigate();
+    const [image, setImage] = useState([]);
+    const history = useHistory();
     const { id } = useParams();
-
-    const updateProduct = async (e) => {
-        e.preventDefault();
-        await axios.put(`http://localhost:5000/products/${id}`, {
-            name: name,
-            rentangHarga: rentangHarga,
-            description: description
-        });
-        history.push("/dashboard");
-    }
 
     useEffect(() => {
         getProductById();
@@ -31,6 +22,7 @@ const Edit = () => {
         setName(response.data.name);
         setRentangHarga(response.data.rentangHarga);
         setDescription(response.data.description);
+        setImage(response.data.image);
     }
 
     return (
@@ -49,57 +41,32 @@ const Edit = () => {
                             <li className="nav-item mx-3">
                                 <Link className="nav-link active" to={`/`}>Home</Link>
                             </li>
+                            <li className="nav-item dropdown">
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a className="dropdown-item" href="#">Logout</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </nav>
             <div className="container-lg bawah-nav">
-                <div className="row mt-5 text-center">
-                    <div className="col-lg-12">
-                        <h2>Edit Journal</h2>
-                    </div>
-                </div>
-                <div className="row justify-content-center">
-                    <div className="col-6  mt-2">
-                        <div className="card shadow">
+                <div className="row">
+                    <div className="col-12 ">
+                        <div className="card">
+                            <div className="products-image" data-bs-toggle="modal" data-bs-target="#modalProducts-1">
+                                <img src={image} class="card-img-top" alt="..." />
+                            </div>
                             <div className="card-body">
-                                <Link to="/dashboard" className="btn btn-success my-2 mb-3">Back</Link>
-                                <form onSubmit={updateProduct}>
-                                    <div className="mb-3">
-                                        <label className="form-label">Nama Makanan</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            value={name}
-                                            placeholder="Nama Makanan..."
-                                            onChange={(e) => setName(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label className="form-label">Kisaran Harga</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            value={rentangHarga}
-                                            placeholder="Kisaran Harga.."
-                                            onChange={(e) => setRentangHarga(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label className="form-label">Description</label>
-                                        <textarea
-                                            type="number"
-                                            className="form-control"
-                                            value={description}
-                                            onChange={(e) => setDescription(e.target.value)}
-                                        ></textarea>
-                                    </div>
-                                    <div className="mb-3">
-                                        <div className="d-grid gap-2">
-                                            <button type="submit" className="btn btn-primary">Update</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                <h5 className="card-title">{name}</h5>
+                                <p className="card-text">{rentangHarga}</p>
+                            </div>
+                            <div class="p-5 mb-4 bg-light rounded-3">
+                                <div class="container-fluid py-5">
+                                    <h1 class="display-5 fw-bold">{name}</h1>
+                                    <p class="col-md-8 fs-4">{description}</p>
+                                    <Link to="/" className="btn btn-primary btn-lg my-2 mb-3">Back</Link>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -143,4 +110,4 @@ const Edit = () => {
     )
 }
 
-export default Edit
+export default Detail

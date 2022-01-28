@@ -2,14 +2,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-
-import st_cake from "./images/strawberry_cake.jpg"
-import burger from "./images/burger.jpg"
-import cup_cake from "./images/cup_cake.jpg"
-import donuts from "./images/donuts.jpg"
-import nasi_goreng from "./images/nasi_goreng.jpg"
-import steak_panggang from "./images/steak_panggang.jpg"
-
 const Dashboard = () => {
 
     const [products, setProduct] = useState([]);
@@ -44,14 +36,6 @@ const Dashboard = () => {
                             <li className="nav-item mx-3">
                                 <Link className="nav-link active" to={`/`}>Home</Link>
                             </li>
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Hi, Admin
-                                </a>
-                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a className="dropdown-item" href="#">Logout</a></li>
-                                </ul>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -64,9 +48,9 @@ const Dashboard = () => {
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Nama</th>
-                                <th scope="col">Kisaran Harga</th>
-                                <th scope="col">Deskripsi</th>
-                                <th scope="col">Aksi</th>
+                                <th scope="col" width="20%">Kisaran Harga</th>
+                                <th scope="col" >Deskripsi</th>
+                                <th scope="col" width="15%">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
