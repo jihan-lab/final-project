@@ -49,20 +49,6 @@ const Register = () => {
                             <li className="nav-item mx-3">
                                 <Link className="nav-link active" to={`/`}>Home</Link>
                             </li>
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Kategori
-                                </a>
-                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a className="dropdown-item" href="#">Minuman</a></li>
-                                    <li><a className="dropdown-item" href="#">Kue</a></li>
-                                    <li><a className="dropdown-item" href="#">Desert</a></li>
-                                    <li><a className="dropdown-item" href="#">Manisan</a></li>
-                                </ul>
-                            </li>
-                            <li className="nav-item mx-3">
-                                <Link to={`/register`} className="nav-link" href="#">Sign Up</Link>
-                            </li>
                             <li className="nav-item mx-3">
                                 <Link to={`/login`} className="btn btn-success px-4" href="#">Sign In</Link>
                             </li>
